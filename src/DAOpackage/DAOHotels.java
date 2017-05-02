@@ -9,14 +9,8 @@ import java.util.Set;
 
 public class DAOHotels implements AbstractDAO{
 
-    static private DAOHotels hotels = new DAOHotels();
     static private Set<Hotel> allHotels = new HashSet<>();
 
-    private DAOHotels() {}
-
-    public static AbstractDAO getData() {
-        return hotels;
-    }
 
     public static void save(Hotel hotel) {
         if (hotel!= null) allHotels.add(hotel);

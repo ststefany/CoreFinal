@@ -6,14 +6,7 @@ import java.util.*;
 import java.util.stream.*;
 
 public class DAOUsers implements AbstractDAO {
-    static private AbstractDAO users = new DAOUsers();
     static private Set<User> allUsers = new HashSet<>();
-
-    private DAOUsers() {}
-
-    public static AbstractDAO getData() {
-        return users;
-    }
 
     public static void saveUser(String login, String password) throws NonValidDataException {
         if (login == null || password == null)

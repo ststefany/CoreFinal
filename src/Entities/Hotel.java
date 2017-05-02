@@ -36,6 +36,7 @@ public class Hotel {
         else return (Room) list.get(0);
     }
 
+
     public String getName() {
         return name;
     }

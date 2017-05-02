@@ -2,9 +2,7 @@ package Model;
 
 import DAOpackage.*;
 import Entities.*;
-import Exceptions.DataBaseException;
-import Exceptions.NonValidDataException;
-
+import Exceptions.*;
 import java.util.*;
 
 public class Controller {
@@ -16,7 +14,6 @@ public class Controller {
         catch (NonValidDataException e) {
             System.err.println("Null value of login or password. Please, try again with correct fields.");
         }
-
     }
 
     public Set<Hotel> findHotelByName(String name) {
@@ -28,7 +25,6 @@ public class Controller {
     }
 
     public void bookRoom(long roomId, long userId, long hotelId) {
-
-
+        DAO.bookRoom(roomId, userId, hotelId);
     }
 }

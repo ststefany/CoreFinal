@@ -3,10 +3,10 @@ package Entities;
 import Exceptions.NonValidDataException;
 
 public class Room {
-    long id;
-    int people;
-    Hotel hotel;
-    User userReserved;
+    private long id;
+    private int people;
+    private Hotel hotel;
+    private User userReserved;
 
     public Room(int people, Hotel hotel) throws NonValidDataException {
         this.id = Math.round(Math.random()*1010);
@@ -16,7 +16,7 @@ public class Room {
         this.userReserved = null;
     }
 
-    boolean isFree() {
+    public boolean isFree() {
         if (userReserved==null)
             return true;
         else return false;
@@ -24,5 +24,9 @@ public class Room {
 
     public long getId() {
         return id;
+    }
+
+    public void setUserReserved(User userReserved) {
+        this.userReserved = userReserved;
     }
 }
