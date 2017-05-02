@@ -22,4 +22,7 @@ public class Room {
         else return false;
     }
 
+    public long getId() {
+        return id;
+    }
 }

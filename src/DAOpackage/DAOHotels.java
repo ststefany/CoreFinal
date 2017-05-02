@@ -1,6 +1,8 @@
 package DAOpackage;
 
 import Entities.*;
+import Exceptions.DataBaseException;
+
 import java.util.stream.*;
 import java.util.*;
 import java.util.Set;
@@ -38,5 +40,9 @@ public class DAOHotels implements AbstractDAO{
         else return set;
     }
 
-
+    public static Hotel findHotelbyID (long id) {
+        List<Hotel> list = allHotels.stream().filter(h -> h.getId()==id).collect(Collectors.toList());
+        if (list.size()>1) { System.err.println("Database error"); throw new DataBaseException();}
+        else return list.get(0);
+    }
 }
