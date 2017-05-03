@@ -19,13 +19,12 @@ public class DAOUsers implements AbstractDAO {
         return user;
     }
 
-    public static User findUserByID(long id) throws NonValidDataException {
+    public static User findUserByID(long id)  {
         List<User> list = allUsers.stream()
                 .filter((User o) -> o.getId() == id)
                 .collect(Collectors.toList());
         if (list.size()> 1) {
             throw new DataBaseException();}
-        if (list.size() == 0) throw new NonValidDataException();
         return list.get(0);
     }
 

@@ -1,19 +1,20 @@
 package DAOpackage;
 
 import Entities.*;
+import Exceptions.NonValidDataException;
+
 import java.util.*;
 
 public class DAORooms implements AbstractDAO {
 
-    private static AbstractDAO rooms = new DAORooms();
-    private static Map<Hotel, Room> allRooms = new HashMap<>();
+    private static Map<Room, Hotel> allRooms = new HashMap<>();
 
-
-    private DAORooms() {
+    public static void save (Room room) {
+        if (room != null)
+        allRooms.put(room, room.getHotel());
     }
 
-    AbstractDAO getData() {
-        return rooms;
+    public Map<Room, Hotel> getAllRooms() {
+        return allRooms;
     }
-
 }

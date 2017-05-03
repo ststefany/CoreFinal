@@ -39,4 +39,5 @@ public class DAOHotels implements AbstractDAO{
         if (list.size()>1) { System.err.println("Database error"); throw new DataBaseException();}
         else return list.get(0);
     }
+
 }

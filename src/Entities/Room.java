@@ -1,5 +1,6 @@
 package Entities;
 
+import DAOpackage.*;
 import Exceptions.NonValidDataException;
 
 public class Room {
@@ -7,13 +8,22 @@ public class Room {
     private int people;
     private Hotel hotel;
     private User userReserved;
+    private String city;
+    private int price;
 
-    public Room(int people, Hotel hotel) throws NonValidDataException {
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public Room(int people, int price, Hotel hotel) throws NonValidDataException {
         this.id = Math.round(Math.random()*1010);
-        if (people == 0 || hotel == null) throw new NonValidDataException();
+        if (people == 0 || hotel == null || price == 0) throw new NonValidDataException();
         this.people = people;
         this.hotel = hotel;
+        this.price = price;
         this.userReserved = null;
+        this.city = hotel.getCity();
+        DAORooms.save(this);
     }
 
     public boolean isFree() {
@@ -25,6 +35,8 @@ public class Room {
     public long getId() {
         return id;
     }
+
+
 
     public void setUserReserved(User userReserved) {
         this.userReserved = userReserved;
