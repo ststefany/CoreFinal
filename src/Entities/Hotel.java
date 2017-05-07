@@ -19,7 +19,7 @@ public class Hotel {
         this.rooms = rooms;
         this.name = name;
         this.city = city;
-        this.id = Math.round((Math.random()-0.23)*1023);
+        this.id = Math.round((Math.random())*10013);
         DAOHotels.save(this);
     }
 
@@ -32,8 +32,9 @@ public class Hotel {
 
     public Room findRoom (long id) {
         List list = rooms.stream().filter(r -> r.getId()==id).collect(Collectors.toList());
-        if (list.size()>1) throw new DataBaseException();
-        else return (Room) list.get(0);
+        if (list.size()!=1) throw new DataBaseException();
+        else
+            return (Room) list.get(0);
     }
 
 

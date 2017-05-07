@@ -16,6 +16,15 @@ public class Controller {
         }
     }
 
+    public void registerUser(User user) {
+        try {
+            DAOUsers.saveUser(user);
+        } catch (NonValidDataException e) {
+            System.err.println("Registered user can't be null. Please, try again with correct fields");
+        }
+    }
+
+
     public Set<Hotel> findHotelByName(String name) {
         return DAOHotels.findHotelbyName(name);
     }
@@ -32,10 +41,9 @@ public class Controller {
         DAO.cancelReservation(roomId, userId, hotelId);
     }
 
-    public Collection<Hotel> findRoom(Map<String, String> params) {
-        DAO.findRoom(params);
+    public Collection<Room> findRoom(Map<String, String> params) {
+        return DAORooms.findRoomByParams(params);
     }
-
 
 
 }

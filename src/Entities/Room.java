@@ -16,29 +16,53 @@ public class Room {
     }
 
     public Room(int people, int price, Hotel hotel) throws NonValidDataException {
-        this.id = Math.round(Math.random()*1010);
         if (people == 0 || hotel == null || price == 0) throw new NonValidDataException();
         this.people = people;
         this.hotel = hotel;
         this.price = price;
         this.userReserved = null;
         this.city = hotel.getCity();
+        this.id = Math.round(Math.random() * 10110);
         DAORooms.save(this);
     }
 
     public boolean isFree() {
-        if (userReserved==null)
+        if (userReserved == null)
             return true;
-        else return false;
+        return false;
     }
 
     public long getId() {
         return id;
     }
 
-
+    public User getUserReserved() {
+        return userReserved;
+    }
 
     public void setUserReserved(User userReserved) {
         this.userReserved = userReserved;
     }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+
+        Room room = (Room) o;
+
+        if (getId() != room.getId()) return false;
+        return getHotel().equals(room.getHotel());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getHotel().hashCode();
+        return result;
+    }
+
+
 }
