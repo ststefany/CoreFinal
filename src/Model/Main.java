@@ -9,6 +9,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Controller ctrl = new Controller();
 
         try {
             Hotel hotel = new Hotel("Hilton", "NY");
@@ -49,7 +50,6 @@ public class Main {
             Room room008 = new Room(3, 111, hotel2);
             Room room009 = new Room(2, 750, hotel2);
 
-            Controller ctrl = new Controller();
 
             User user = new User("vova", "football");
             ctrl.registerUser(user);
@@ -63,14 +63,25 @@ public class Main {
 
             System.out.println(ctrl.findHotelByName("Hilton"));
             System.out.println(ctrl.findHotelbyCity("Kyiv"));
+        } catch (NonValidDataException e) {
+            e.printStackTrace();
+            System.err.println("Can't create an instance with null data");
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("people", "18");
+        params.put("city", "SF");
 
-            Map<String, String> params = new HashMap<>();
-            params.put("people", "18");
-            params.put("city", "SF");
+        try {
 
             System.out.print(ctrl.findRoom(params));
+        } catch (Exception e) {
+            System.err.println("wrong");
+        }
 
-        } catch (NonValidDataException e) {
+        params.put("city", "NY");
+        try {
+            System.out.print(ctrl.findRoom(params));
+        } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Can't create an instance with null data");
         }

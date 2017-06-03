@@ -5,13 +5,13 @@ import Entities.User;
 import Exceptions.NonValidDataException;
 import Exceptions.WrongUserException;
 
-public class DAO<T> implements AbstractDAO<T> {
+public class DAO<T> {
     private static DAO database = new DAO();
 
     private DAO() {
     }
 
-    public static AbstractDAO getData() {
+    public static DAO getInstanse() {
         return database;
     }
 
@@ -43,17 +43,19 @@ public class DAO<T> implements AbstractDAO<T> {
 
     private static boolean checkData(long roomId, long userId, long hotelId) {
         boolean checked = false;
-        Room room = null;
+        Room room;
         try {
             User user = DAOUsers.findUserByID(userId);
             if (!user.isCurrent()) throw new WrongUserException();
             room = DAOHotels.findHotelbyID(hotelId).findRoom(roomId);
             if (room == null) throw new NonValidDataException();
-            else checked = true;
+            checked = true;
         } catch (WrongUserException e) {
             System.err.println("Change current user");
+            e.printStackTrace();
         } catch (NonValidDataException e) {
             System.err.println("Entered data contains a mistake");
+            e.printStackTrace();
         }
         return checked;
     }

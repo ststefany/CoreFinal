@@ -7,11 +7,14 @@ public class User {
     private String login;
     private String password;
     private Set<Room> reservedRooms = new HashSet<>();
+    private static Random random = new Random();
+
 
     public User(String login, String password) {
         this.login = login;
         this.password = password;
-        this.id = Math.round(Math.random())*10001;
+        this.id = random.nextLong();
+        System.out.println(login + " " + id);
     }
 
     public long getId() {

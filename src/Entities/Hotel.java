@@ -11,6 +11,8 @@ public class Hotel {
     private String name;
     private String city;
     private long id;
+    private static Random random = new Random();
+
 
 
 
@@ -19,22 +21,25 @@ public class Hotel {
         this.rooms = rooms;
         this.name = name;
         this.city = city;
-        this.id = Math.round((Math.random())*10013);
+        this.id = random.nextLong();
         DAOHotels.save(this);
+        System.out.println(name + " " + city + " " + id);
     }
 
     public Hotel(String name, String city) throws NonValidDataException {
         if (name ==null || city == null) throw new NonValidDataException();
         this.name = name;
         this.city = city;
+        this.id = random.nextLong();
         DAOHotels.save(this);
     }
 
     public Room findRoom (long id) {
-        List list = rooms.stream().filter(r -> r.getId()==id).collect(Collectors.toList());
-        if (list.size()!=1) throw new DataBaseException();
-        else
-            return (Room) list.get(0);
+        List<Room> list = rooms.stream().filter((Room r) -> (r.getId()==id)).collect(Collectors.toList());
+        System.out.println(list);
+        if (list.size()>1) throw new DataBaseException();
+        if (list.size()<1) return null;
+        return list.get(0);
     }
 
 
@@ -50,4 +55,12 @@ public class Hotel {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

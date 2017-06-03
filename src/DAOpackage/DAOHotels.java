@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DAOHotels implements AbstractDAO  {
-    private static DAOHotels hotels = new DAOHotels();
+public class DAOHotels implements DAOInterface {
+    private static final DAOHotels hotels = new DAOHotels();
     private static Set<Hotel> allHotels = new HashSet<>();
 
     private DAOHotels() {
@@ -42,8 +42,9 @@ public class DAOHotels implements AbstractDAO  {
     }
 
     public static Hotel findHotelbyID(long id) {
-        List<Hotel> list = allHotels.stream().filter(h -> h.getId() == id).collect(Collectors.toList());
-       if (list.size() > 1) {
+        List<Hotel> list = allHotels.stream().filter((Hotel h) -> (h.getId() == id)).collect(Collectors.toList());
+        System.out.println(list);
+       if (list.size() != 1) {
            System.err.println("Database error");
            throw new DataBaseException();
         } else

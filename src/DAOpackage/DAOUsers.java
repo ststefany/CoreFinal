@@ -6,7 +6,7 @@ import Exceptions.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class DAOUsers implements AbstractDAO {
+public class DAOUsers {
     private static Set<User> allUsers = new HashSet<>();
     private static DAOUsers users = new DAOUsers();
 

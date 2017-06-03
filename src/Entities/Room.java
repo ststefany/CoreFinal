@@ -1,7 +1,12 @@
 package Entities;
 
-import DAOpackage.*;
+import DAOpackage.DAORooms;
+import Exceptions.DataBaseException;
 import Exceptions.NonValidDataException;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.Random;
 
 public class Room {
     private long id;
@@ -10,6 +15,7 @@ public class Room {
     private User userReserved;
     private String city;
     private int price;
+    private static Random random = new Random();
 
     public Hotel getHotel() {
         return hotel;
@@ -22,8 +28,10 @@ public class Room {
         this.price = price;
         this.userReserved = null;
         this.city = hotel.getCity();
-        this.id = Math.round(Math.random() * 10110);
+        this.id = random.nextLong();
         DAORooms.save(this);
+        System.out.println(hotel + " " + city + " " + "" + people + " " + id);
+
     }
 
     public boolean isFree() {
@@ -31,6 +39,35 @@ public class Room {
             return true;
         return false;
     }
+
+    private Field findFieldWithName(String name) throws NonValidDataException, DataBaseException {
+        if (name == null) throw new NonValidDataException();
+        for (Field field : Room.class.getDeclaredFields()) {
+            if (name.equals(field.getName()))
+                return field;
+        }
+        throw new DataBaseException();
+    }
+
+    public boolean doesFit(Map<String, String> params) {
+        boolean fits = false;
+        for (String param : params.keySet()) {
+            try {
+                Field field = this.findFieldWithName(param);
+                if (field.get(this).equals(params.get(param)))
+                    fits = true;
+                else break;
+            } catch (NonValidDataException e) {
+                System.err.println("Entered parameters are not valid. Try with different parameneters");
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                System.err.println("Problem with access to the data");
+                e.printStackTrace();
+            }
+        }
+        return fits;
+    }
+
 
     public long getId() {
         return id;
@@ -43,7 +80,6 @@ public class Room {
     public void setUserReserved(User userReserved) {
         this.userReserved = userReserved;
     }
-
 
 
     @Override
